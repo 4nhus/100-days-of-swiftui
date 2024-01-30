@@ -16,6 +16,10 @@ struct ContentView: View {
     @State private var scoreMessage = ""
     @State private var playedRounds = 0
     @State private var showingGameEnd = false
+    @State private var selectedButton = 0
+    @State private var rotationAmount = 0.0
+    @State private var opaque = true
+    @State private var fullSize = true
     
     var body: some View {
         ZStack {
@@ -47,6 +51,9 @@ struct ContentView: View {
                         } label: {
                             FlagImage(flag: countries[number])
                         }
+                        .rotation3DEffect(.degrees(selectedButton == number ? rotationAmount : 0), axis: (x: 0.0, y: 1.0, z: 0.0))
+                        .opacity(selectedButton == number || opaque ? 1 : 0.5)
+                        .scaleEffect(selectedButton == number || fullSize ? 1 : 0.7)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -78,6 +85,16 @@ struct ContentView: View {
     }
     
     func flagTapped(_ number: Int) {
+        selectedButton = number
+        
+        withAnimation(.bouncy) {
+            rotationAmount += 360
+            opaque = false
+            fullSize = false
+        }
+        
+        rotationAmount = 0
+        
         if number == correctAnswer {
             scoreTitle = "Correct"
             currentScore += 1
@@ -99,6 +116,10 @@ struct ContentView: View {
     func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        withAnimation {
+            opaque = true
+            fullSize = true
+        }
     }
     
     func restartGame() {
