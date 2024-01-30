@@ -14,11 +14,14 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError = false
+    @State private var score: Int = 0
     
     var body: some View {
         NavigationStack {
                 List {
+                    
                     Section {
+                        Text("Current score: \(score)")
                         TextField("Enter your word", text: $newWord)
                             .textInputAutocapitalization(.never)
                     }
@@ -39,7 +42,7 @@ struct ContentView: View {
                     Text(errorMessage)
                 }
                 .toolbar {
-                    Button("Restart with new word") {
+                    Button("Get new word") {
                         startGame()
                     }
                 }
@@ -83,6 +86,7 @@ struct ContentView: View {
             usedWords.insert(answer, at: 0)
         }
         newWord = ""
+        score += answer.count
     }
     
     func startGame() {
@@ -94,7 +98,7 @@ struct ContentView: View {
     }
     
     func isLongEnough(word: String) -> Bool {
-        word.count < 3
+        word.count >= 3
     }
     
     func isOriginal(word: String) -> Bool {
