@@ -49,6 +49,16 @@ struct ContentView: View {
             return
         }
         
+        guard answer != rootWord else {
+            wordError(title: "Word invalid", message: "Word cannot be root word")
+            return
+        }
+        
+        guard isLongEnough(word: answer) else {
+            wordError(title: "Word too short", message: "Word must be longer than at least 3 letters")
+            return
+        }
+        
         guard isOriginal(word: answer) else {
             wordError(title: "Word used already", message: "Be more original")
             return
@@ -76,6 +86,10 @@ struct ContentView: View {
         let allWords = startWords.components(separatedBy: "\n")
         
         rootWord = allWords.randomElement() ?? "silkworm"
+    }
+    
+    func isLongEnough(word: String) -> Bool {
+        word.count < 3
     }
     
     func isOriginal(word: String) -> Bool {
