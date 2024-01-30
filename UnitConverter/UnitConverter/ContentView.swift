@@ -8,25 +8,46 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let units: [UnitLength] = [UnitLength.millimeters, UnitLength.centimeters, UnitLength.meters, UnitLength.kilometers, UnitLength.feet, UnitLength.yards, UnitLength.miles]
+    private enum unitType: String {
+        case temperature = "temperature", length = "length", time = "time", volume = "volume"
+    }
+    private let unitTypes: [unitType] = [.temperature, .length, .time, .volume]
     
-    @State private var inputUnit: UnitLength = UnitLength.millimeters
-    @State private var outputUnit: UnitLength = UnitLength.millimeters
+    @State private var selectedUnitType: unitType = .length
+    @State private var inputUnit: Dimension = UnitLength.millimeters
+    @State private var outputUnit: Dimension = UnitLength.millimeters
     @State private var valueToConvert: Double = 0
     @FocusState private var valueToConvertIsFocused: Bool
     
+    var selectedUnits: [Dimension] {
+        switch selectedUnitType {
+        case .temperature:
+            [UnitTemperature.celsius, UnitTemperature.fahrenheit, UnitTemperature.kelvin]
+        case .length:
+            [UnitLength.millimeters, UnitLength.centimeters, UnitLength.meters, UnitLength.kilometers, UnitLength.feet, UnitLength.yards, UnitLength.miles]
+        case .time:
+            [UnitDuration.milliseconds, UnitDuration.seconds, UnitDuration.minutes, UnitDuration.hours]
+        case .volume:
+            [UnitVolume.milliliters, UnitVolume.liters, UnitVolume.cups, UnitVolume.pints, UnitVolume.gallons]
+        }
+    }
     var convertedValue: Double {
         Measurement(value: valueToConvert, unit: inputUnit).converted(to: outputUnit).value
     }
     
-    
-    
     var body: some View {
         NavigationStack {
             Form {
+                Section() {
+                    Picker("Type of units to convert", selection: $selectedUnitType) {
+                        ForEach(unitTypes, id: \.self) {
+                            Text($0.rawValue)
+                        }
+                    }
+                }
                 Section("Select your input unit") {
                     Picker("Input unit", selection: $inputUnit) {
-                        ForEach(units, id: \.self) {
+                        ForEach(selectedUnits, id: \.self) {
                             Text($0.symbol)
                         }
                     }
@@ -34,23 +55,23 @@ struct ContentView: View {
                 }
                 Section("Select your output unit") {
                     Picker("Output unit", selection: $outputUnit) {
-                        ForEach(units, id: \.self) {
+                        ForEach(selectedUnits, id: \.self) {
                             Text($0.symbol)
                         }
                     }
                     .pickerStyle(.segmented)
                 }
-                Section("Enter your value to convert") {
+                Section("Enter your value in \(inputUnit.symbol) to convert") {
                     TextField("Value to convert", value: $valueToConvert, format: .number)
                         .keyboardType(.numberPad)
                         .focused($valueToConvertIsFocused)
                     
                 }
-                Section("Your converted value is") {
-                    Text("\(convertedValue.formatted() + outputUnit.symbol)")
+                Section() {
+                    Text("Your converted value is: \(convertedValue.formatted() + outputUnit.symbol)")
                 }
             }
-            .navigationTitle("Length Converter")
+            .navigationTitle("Unit Converter")
             .toolbar {
                 if valueToConvertIsFocused {
                     Button("Done") {
