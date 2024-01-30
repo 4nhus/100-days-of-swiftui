@@ -38,6 +38,11 @@ struct ContentView: View {
                 .alert(errorTitle, isPresented: $showingError) { } message: {
                     Text(errorMessage)
                 }
+                .toolbar {
+                    Button("Restart with new word") {
+                        startGame()
+                    }
+                }
             }
     }
 
