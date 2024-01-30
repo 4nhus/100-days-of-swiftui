@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    private enum unitType: String {
-        case temperature = "temperature", length = "length", time = "time", volume = "volume"
+    private enum Unit: String {
+        case temperature, length, time, volume
     }
-    private let unitTypes: [unitType] = [.temperature, .length, .time, .volume]
+    private let unitTypes: [Unit] = [.temperature, .length, .time, .volume]
     
-    @State private var selectedUnitType: unitType = .length
+    @State private var selectedUnitType: Unit = .length
     @State private var inputUnit: Dimension = UnitLength.millimeters
     @State private var outputUnit: Dimension = UnitLength.millimeters
     @State private var valueToConvert: Double = 0
