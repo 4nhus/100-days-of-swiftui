@@ -40,6 +40,7 @@ struct AddView: View {
                     dismiss()
                 }
             }
+            .navigationBarBackButtonHidden()
         }
     }
 }
