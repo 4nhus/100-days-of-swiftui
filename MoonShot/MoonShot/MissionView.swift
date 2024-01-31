@@ -37,7 +37,9 @@ struct MissionView: View {
                     .containerRelativeFrame(.horizontal) { width, axis in
                         width * 0.6
                     }
-                    .padding(.top)
+                    .padding(.vertical)
+                
+                Text(mission.formattedLaunchDate)
 
                 VStack(alignment: .leading) {
                     Rectangle()
