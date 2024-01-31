@@ -8,14 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var habits = Habits()
+    @State private var showAddHabit = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List {
+                ForEach(habits.getHabits()) { habit in
+                    NavigationLink(value: habit) {
+                        HabitView(habit: habit)
+                    }
+                    Divider()
+                }
+                .onDelete(perform: { indexSet in
+                    habits.deleteHabbit(at: indexSet)
+                })
+                .navigationDestination(for: Habit.self) { habit in
+                    HabitDetailsView(habit: habit, habits: habits)
+                }
+            }
+            .navigationTitle("Habit Tracker")
+            .toolbar {
+                Button("New habit") {
+                    showAddHabit = true
+                }
+            }
         }
-        .padding()
+        .sheet(isPresented: $showAddHabit) {
+            AddHabitView(habits: habits)
+        }
     }
 }
 
