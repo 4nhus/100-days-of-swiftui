@@ -18,16 +18,14 @@ struct GridLayout: View {
         ScrollView {
             LazyVGrid(columns: columns) {
                 ForEach(missions) { mission in
-                    NavigationLink {
-                        MissionView(mission: mission, astronauts: astronauts)
-                    } label: {
+                    NavigationLink(value: mission) {
                         VStack {
                             Image(mission.image)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 100, height: 100)
                                 .padding()
-
+                            
                             VStack {
                                 Text(mission.displayName)
                                     .font(.headline)
@@ -49,6 +47,9 @@ struct GridLayout: View {
                 }
             }
             .padding([.horizontal, .bottom])
+        }
+        .navigationDestination(for: Mission.self) {
+            MissionView(mission: $0, astronauts: astronauts)
         }
     }
 }

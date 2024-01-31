@@ -59,10 +59,6 @@
 		961BE2762B69FFF500921BE8 = {
 			isa = PBXGroup;
 			children = (
-				961BE2A62B6A187800921BE8 /* ListLayout.swift */,
-				961BE2A42B6A17BE00921BE8 /* GridLayout.swift */,
-				961BE2A02B6A13BD00921BE8 /* CustomDivider.swift */,
-				961BE2A22B6A141B00921BE8 /* AstronautsView.swift */,
 				961BE2812B69FFF500921BE8 /* MoonShot */,
 				961BE2802B69FFF500921BE8 /* Products */,
 			);
@@ -79,6 +75,10 @@
 		961BE2812B69FFF500921BE8 /* MoonShot */ = {
 			isa = PBXGroup;
 			children = (
+				961BE2A62B6A187800921BE8 /* ListLayout.swift */,
+				961BE2A42B6A17BE00921BE8 /* GridLayout.swift */,
+				961BE2A02B6A13BD00921BE8 /* CustomDivider.swift */,
+				961BE2A22B6A141B00921BE8 /* AstronautsView.swift */,
 				961BE2902B6A0C4F00921BE8 /* astronauts.json */,
 				961BE2822B69FFF500921BE8 /* MoonShotApp.swift */,
 				961BE2842B69FFF500921BE8 /* ContentView.swift */,

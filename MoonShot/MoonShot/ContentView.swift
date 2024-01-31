@@ -35,6 +35,7 @@ struct ContentView: View {
                 .foregroundStyle(.white.opacity(0.7))
             }
         }
+        .tint(.primary)
     }
 }
 
