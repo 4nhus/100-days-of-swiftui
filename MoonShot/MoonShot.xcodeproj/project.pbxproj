@@ -19,6 +19,8 @@
 		961BE29B2B6A0F6600921BE8 /* Color-Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE29A2B6A0F6600921BE8 /* Color-Theme.swift */; };
 		961BE29D2B6A106D00921BE8 /* MissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE29C2B6A106D00921BE8 /* MissionView.swift */; };
 		961BE29F2B6A123400921BE8 /* AstronautView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE29E2B6A123400921BE8 /* AstronautView.swift */; };
+		961BE2A12B6A13BD00921BE8 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE2A02B6A13BD00921BE8 /* CustomDivider.swift */; };
+		961BE2A32B6A141B00921BE8 /* AstronautsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE2A22B6A141B00921BE8 /* AstronautsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		961BE29A2B6A0F6600921BE8 /* Color-Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color-Theme.swift"; sourceTree = "<group>"; };
 		961BE29C2B6A106D00921BE8 /* MissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionView.swift; sourceTree = "<group>"; };
 		961BE29E2B6A123400921BE8 /* AstronautView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstronautView.swift; sourceTree = "<group>"; };
+		961BE2A02B6A13BD00921BE8 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
+		961BE2A22B6A141B00921BE8 /* AstronautsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstronautsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +55,8 @@
 		961BE2762B69FFF500921BE8 = {
 			isa = PBXGroup;
 			children = (
+				961BE2A02B6A13BD00921BE8 /* CustomDivider.swift */,
+				961BE2A22B6A141B00921BE8 /* AstronautsView.swift */,
 				961BE2812B69FFF500921BE8 /* MoonShot */,
 				961BE2802B69FFF500921BE8 /* Products */,
 			);
@@ -171,6 +177,8 @@
 				961BE2832B69FFF500921BE8 /* MoonShotApp.swift in Sources */,
 				961BE2992B6A0D1F00921BE8 /* Mission.swift in Sources */,
 				961BE2972B6A0CAF00921BE8 /* Bundle-Decodable.swift in Sources */,
+				961BE2A32B6A141B00921BE8 /* AstronautsView.swift in Sources */,
+				961BE2A12B6A13BD00921BE8 /* CustomDivider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
