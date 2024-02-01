@@ -40,7 +40,7 @@ class Order: Codable {
     var city = ""
     var zip = ""
     var hasInvalidAddress: Bool {
-        return name.isEmpty || streetAddress.isEmpty || city.isEmpty || zip.isEmpty
+        return name.isBlank || streetAddress.isBlank || city.isBlank || zip.isBlank
     }
     var cost: Double {
         // $2 per cake
@@ -60,5 +60,11 @@ class Order: Codable {
         }
 
         return cost
+    }
+}
+
+extension String {
+    var isBlank: Bool {
+        self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }
