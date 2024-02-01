@@ -72,7 +72,7 @@ struct CheckoutView: View {
         do {
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
             let decodedOrder = try JSONDecoder().decode(Order.self, from: data)
-            confirmationMessage = "Your order for \(decodedOrder.quantity)x \(Order.types[decodedOrder.type].lowercased()) cupcakes is on its way!"
+            confirmationMessage = "Your order for \(decodedOrder.details.quantity)x \(Order.types[decodedOrder.details.type].lowercased()) cupcakes is on its way!"
             showingConfirmation = true
         } catch {
             failureMessage = "Checkout failed: \(error.localizedDescription)"
