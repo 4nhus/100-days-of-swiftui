@@ -45,10 +45,17 @@ struct AddBookView: View {
                         modelContext.insert(newBook)
                         dismiss()
                     }
+                    .disabled(title.isBlank || author.isBlank)
                 }
             }
             .navigationTitle("Add Book")
         }
+    }
+}
+
+extension String {
+    var isBlank: Bool {
+        self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }
 

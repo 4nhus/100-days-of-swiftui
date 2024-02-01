@@ -71,7 +71,6 @@ struct ContentView: View {
 #Preview {
     do {
         let container = try ModelContainer(for: Book.self)
-        let example = Book(title: "Test Book", author: "Test Author", genre: "Fantasy", review: "This was a great book; I really enjoyed it.", rating: 4)
         
         return ContentView()
             .modelContainer(container)
