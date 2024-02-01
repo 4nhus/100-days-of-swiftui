@@ -5,22 +5,34 @@
 //  Created by Anh Nguyen on 1/2/2024.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @State private var users = [User]()
+    @Environment(\.modelContext) var modelContext
+    @Query var users: [User]
+    
     @State private var failedFetchMessage = ""
     @State private var showingFailedFetch = false
+    @State private var loadedData = false
     
     var body: some View {
         NavigationStack {
-            List(users) { user in
-                NavigationLink(value: user) {
-                    HStack {
-                        Image(systemName: "circle.fill")
-                            .foregroundStyle(user.isActive ? .green : .gray.opacity(0.5))
-                        Text(user.name)
-                            .fontWeight(user.isActive ? .semibold : .regular)
+            Group {
+                if loadedData {
+                    List(users) { user in
+                        NavigationLink(value: user) {
+                            HStack {
+                                Image(systemName: "circle.fill")
+                                    .foregroundStyle(user.isActive ? .green : .gray.opacity(0.5))
+                                Text(user.name)
+                                    .fontWeight(user.isActive ? .semibold : .regular)
+                            }
+                        }
+                    }
+                } else {
+                    List {
+                        
                     }
                 }
             }
@@ -30,10 +42,14 @@ struct ContentView: View {
             .navigationTitle("FriendFace")
         }
         .onAppear {
+            //try? modelContext.delete(model: User.self)
+            
             Task {
                 if users.count == 0 {
                     await fetchUsers()
                 }
+                
+                loadedData = true
             }
         }
         .alert("Failed to fetch friends!",isPresented: $showingFailedFetch) {
@@ -54,7 +70,10 @@ struct ContentView: View {
             let (usersData, _): (Data, URLResponse) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            users = try JSONDecoder().decode([User].self, from: usersData)
+            let decodedUsers = try JSONDecoder().decode([User].self, from: usersData)
+            decodedUsers.forEach { user in
+                modelContext.insert(user)
+            }
         } catch {
             failedFetchMessage = error.localizedDescription
             showingFailedFetch = true
@@ -63,5 +82,12 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    do {
+        let container = try ModelContainer(for: User.self)
+        
+        return ContentView()
+            .modelContainer(container)
+    } catch {
+        return Text("Failed to create preview: \(error.localizedDescription)")
+    }
 }
