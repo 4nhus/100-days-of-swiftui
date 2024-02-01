@@ -5,35 +5,38 @@
 //  Created by Anh Nguyen on 31/1/2024.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @State private var expenses = Expenses()
+    @Environment(\.modelContext) var modelContext
+    
+    @Query var expenses: [Expense]
     
     var body: some View {
         NavigationStack {
             List {
                 Section("Personal") {
-                    ForEach(expenses.items) { item in
-                        if item.type == "Personal" {
-                            ExpenseItemView(item)
+                    ForEach(expenses) { expense in
+                        if expense.type == "Personal" {
+                            ExpenseView(expense: expense)
                         }
                     }
-                    .onDelete(perform: removeItems)
+                    .onDelete(perform: removeExpense)
                 }
                 Section("Business") {
-                    ForEach(expenses.items) { item in
-                        if item.type == "Business" {
-                            ExpenseItemView(item)
+                    ForEach(expenses) { expense in
+                        if expense.type == "Business" {
+                            ExpenseView(expense: expense)
                         }
                     }
-                    .onDelete(perform: removeItems)
+                    .onDelete(perform: removeExpense)
                 }
             }
             .navigationTitle("iExpense")
             .toolbar {
                 NavigationLink {
-                    AddView(expenses: expenses)
+                    AddView()
                 } label: {
                     Button("Add Expense", systemImage: "plus") {
                     }
@@ -42,11 +45,22 @@ struct ContentView: View {
         }
     }
     
-    func removeItems(at offsets: IndexSet) {
-        expenses.items.remove(atOffsets: offsets)
+    func removeExpense(at offsets: IndexSet) {
+        for offset in offsets {
+            let expense = expenses[offset]
+            
+            modelContext.delete(expense)
+        }
     }
 }
 
 #Preview {
-    ContentView()
+    do {
+        let container = try ModelContainer(for: Expense.self)
+        
+        return ContentView()
+            .modelContainer(container)
+    } catch {
+        return Text("Failed to create preview: \(error.localizedDescription)")
+    }
 }
