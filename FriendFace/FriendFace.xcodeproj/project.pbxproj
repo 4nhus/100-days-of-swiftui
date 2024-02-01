@@ -11,6 +11,8 @@
 		9625A9E52B6B9A3D00D5117A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9625A9E42B6B9A3D00D5117A /* ContentView.swift */; };
 		9625A9E72B6B9A3E00D5117A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9625A9E62B6B9A3E00D5117A /* Assets.xcassets */; };
 		9625A9EA2B6B9A3E00D5117A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9625A9E92B6B9A3E00D5117A /* Preview Assets.xcassets */; };
+		9625A9F12B6B9AC700D5117A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9625A9F02B6B9AC700D5117A /* User.swift */; };
+		9625A9F32B6BA34600D5117A /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9625A9F22B6BA34600D5117A /* UserView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		9625A9E42B6B9A3D00D5117A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9625A9E62B6B9A3E00D5117A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9625A9E92B6B9A3E00D5117A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9625A9F02B6B9AC700D5117A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		9625A9F22B6BA34600D5117A /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +56,9 @@
 			isa = PBXGroup;
 			children = (
 				9625A9E22B6B9A3D00D5117A /* FriendFaceApp.swift */,
+				9625A9F02B6B9AC700D5117A /* User.swift */,
 				9625A9E42B6B9A3D00D5117A /* ContentView.swift */,
+				9625A9F22B6BA34600D5117A /* UserView.swift */,
 				9625A9E62B6B9A3E00D5117A /* Assets.xcassets */,
 				9625A9E82B6B9A3E00D5117A /* Preview Content */,
 			);
@@ -139,6 +145,8 @@
 			files = (
 				9625A9E52B6B9A3D00D5117A /* ContentView.swift in Sources */,
 				9625A9E32B6B9A3D00D5117A /* FriendFaceApp.swift in Sources */,
+				9625A9F12B6B9AC700D5117A /* User.swift in Sources */,
+				9625A9F32B6BA34600D5117A /* UserView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

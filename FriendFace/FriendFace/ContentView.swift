@@ -8,14 +8,57 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var users = [User]()
+    @State private var failedFetchMessage = ""
+    @State private var showingFailedFetch = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List(users) { user in
+                NavigationLink(value: user) {
+                    HStack {
+                        Image(systemName: "circle.fill")
+                            .foregroundStyle(user.isActive ? .green : .gray.opacity(0.5))
+                        Text(user.name)
+                            .fontWeight(user.isActive ? .semibold : .regular)
+                    }
+                }
+            }
+            .navigationDestination(for: User.self) { user in
+                UserView(user: user)
+            }
+            .navigationTitle("FriendFace")
         }
-        .padding()
+        .onAppear {
+            Task {
+                if users.count == 0 {
+                    await fetchUsers()
+                }
+            }
+        }
+        .alert("Failed to fetch friends!",isPresented: $showingFailedFetch) {
+            Button("Retry") {
+                Task {
+                    await fetchUsers()
+                }
+            }
+        } message: {
+            Text(failedFetchMessage)
+        }
+    }
+    
+    func fetchUsers() async {
+        let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json")!
+        
+        do {
+            let (usersData, _): (Data, URLResponse) = try await URLSession.shared.data(from: url)
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            users = try JSONDecoder().decode([User].self, from: usersData)
+        } catch {
+            failedFetchMessage = error.localizedDescription
+            showingFailedFetch = true
+        }
     }
 }
 
