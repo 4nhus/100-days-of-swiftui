@@ -9,32 +9,28 @@ import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.modelContext) var modelContext
-    
     @Query var expenses: [Expense]
+    
+    let sortOptions = ["name", "amount"]
+    
+    @State private var sortOption = "name"
+    
+    var sortOrder: [SortDescriptor<Expense>] {
+        sortOption == "name" ? [SortDescriptor(\Expense.name), SortDescriptor(\Expense.amount)] : [SortDescriptor(\Expense.amount), SortDescriptor(\Expense.name)]
+    }
     
     var body: some View {
         NavigationStack {
-            List {
-                Section("Personal") {
-                    ForEach(expenses) { expense in
-                        if expense.type == "Personal" {
-                            ExpenseView(expense: expense)
-                        }
-                    }
-                    .onDelete(perform: removeExpense)
-                }
-                Section("Business") {
-                    ForEach(expenses) { expense in
-                        if expense.type == "Business" {
-                            ExpenseView(expense: expense)
-                        }
-                    }
-                    .onDelete(perform: removeExpense)
-                }
-            }
+            ExpensesView(sortOrder: sortOrder)
             .navigationTitle("iExpense")
             .toolbar {
+                Menu("Sort expenses") {
+                    Picker("Sorting by", selection: $sortOption) {
+                        ForEach(sortOptions, id: \.self) { option in
+                            Text(option)
+                        }
+                    }
+                }
                 NavigationLink {
                     AddView()
                 } label: {
@@ -42,14 +38,6 @@ struct ContentView: View {
                     }
                 }
             }
-        }
-    }
-    
-    func removeExpense(at offsets: IndexSet) {
-        for offset in offsets {
-            let expense = expenses[offset]
-            
-            modelContext.delete(expense)
         }
     }
 }

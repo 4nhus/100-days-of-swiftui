@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9625A9D12B6B7A4000D5117A /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9625A9D02B6B7A4000D5117A /* Expense.swift */; };
 		9625A9D32B6B7B4900D5117A /* ExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9625A9D22B6B7B4900D5117A /* ExpenseView.swift */; };
+		9625A9D52B6B8DD500D5117A /* ExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9625A9D42B6B8DD500D5117A /* ExpensesView.swift */; };
 		9634AA3F2B69EF3C0026166E /* iExpenseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9634AA3E2B69EF3C0026166E /* iExpenseApp.swift */; };
 		9634AA412B69EF3C0026166E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9634AA402B69EF3C0026166E /* ContentView.swift */; };
 		9634AA432B69EF3E0026166E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9634AA422B69EF3E0026166E /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		9625A9D02B6B7A4000D5117A /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		9625A9D22B6B7B4900D5117A /* ExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseView.swift; sourceTree = "<group>"; };
+		9625A9D42B6B8DD500D5117A /* ExpensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesView.swift; sourceTree = "<group>"; };
 		9634AA3B2B69EF3C0026166E /* iExpense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iExpense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9634AA3E2B69EF3C0026166E /* iExpenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iExpenseApp.swift; sourceTree = "<group>"; };
 		9634AA402B69EF3C0026166E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 			children = (
 				9634AA3E2B69EF3C0026166E /* iExpenseApp.swift */,
 				9634AA402B69EF3C0026166E /* ContentView.swift */,
+				9625A9D42B6B8DD500D5117A /* ExpensesView.swift */,
 				9625A9D02B6B7A4000D5117A /* Expense.swift */,
 				9634AA502B69F6D40026166E /* AddView.swift */,
 				9634AA422B69EF3E0026166E /* Assets.xcassets */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9625A9D12B6B7A4000D5117A /* Expense.swift in Sources */,
+				9625A9D52B6B8DD500D5117A /* ExpensesView.swift in Sources */,
 				9634AA412B69EF3C0026166E /* ContentView.swift in Sources */,
 				9634AA512B69F6D40026166E /* AddView.swift in Sources */,
 				9634AA3F2B69EF3C0026166E /* iExpenseApp.swift in Sources */,
