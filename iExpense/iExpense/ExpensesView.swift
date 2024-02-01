@@ -11,29 +11,25 @@ import SwiftUI
 struct ExpensesView: View {
     @Environment(\.modelContext) var modelContext
     @Query var expenses: [Expense]
+    let expenseType: String
     
-    init(sortOrder: [SortDescriptor<Expense>]) {
-        _expenses = Query(sort: sortOrder)
+    init(expenseType: String,  sortOrder: [SortDescriptor<Expense>]) {
+        _expenses = Query(filter: #Predicate<Expense> { expense in
+            if expenseType == "Both" {
+                return true
+            } else {
+                return expense.type == expenseType
+            }
+        }, sort: sortOrder)
+        self.expenseType = expenseType
     }
     
     var body: some View {
-        List {
-            Section("Personal") {
-                ForEach(expenses) { expense in
-                    if expense.type == "Personal" {
-                        ExpenseView(expense: expense)
-                    }
-                }
-                .onDelete(perform: removeExpense)
+        Section("\(expenseType == "Both" ? "Personal and business" : expenseType) expenses") {
+            ForEach(expenses) { expense in
+                ExpenseView(expense: expense)
             }
-            Section("Business") {
-                ForEach(expenses) { expense in
-                    if expense.type == "Business" {
-                        ExpenseView(expense: expense)
-                    }
-                }
-                .onDelete(perform: removeExpense)
-            }
+            .onDelete(perform: removeExpense)
         }
     }
     

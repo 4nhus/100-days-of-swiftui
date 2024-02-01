@@ -11,24 +11,32 @@ import SwiftUI
 struct ContentView: View {
     @Query var expenses: [Expense]
     
-    let sortOptions = ["name", "amount"]
+    let expenseTypeOptions = ["Personal", "Business", "Both"]
     
-    @State private var sortOption = "name"
-    
-    var sortOrder: [SortDescriptor<Expense>] {
-        sortOption == "name" ? [SortDescriptor(\Expense.name), SortDescriptor(\Expense.amount)] : [SortDescriptor(\Expense.amount), SortDescriptor(\Expense.name)]
-    }
+    @State private var sortOrder = [SortDescriptor(\Expense.name), SortDescriptor(\Expense.amount)]
+    @State private var expenseTypeChoice = "Both"
     
     var body: some View {
         NavigationStack {
-            ExpensesView(sortOrder: sortOrder)
+            List {
+                Section("Type of expense") {
+                    Picker("Pick type(s) of expenses to show", selection: $expenseTypeChoice) {
+                        ForEach(expenseTypeOptions, id: \.self) { option in
+                            Text(option)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                ExpensesView(expenseType: expenseTypeChoice, sortOrder: sortOrder)
+            }
             .navigationTitle("iExpense")
             .toolbar {
                 Menu("Sort expenses") {
-                    Picker("Sorting by", selection: $sortOption) {
-                        ForEach(sortOptions, id: \.self) { option in
-                            Text(option)
-                        }
+                    Picker("Sorting by", selection: $sortOrder) {
+                        Text("name")
+                            .tag([SortDescriptor(\Expense.name), SortDescriptor(\Expense.amount)])
+                        Text("amount")
+                            .tag([SortDescriptor(\Expense.amount), SortDescriptor(\Expense.name)])
                     }
                 }
                 NavigationLink {
