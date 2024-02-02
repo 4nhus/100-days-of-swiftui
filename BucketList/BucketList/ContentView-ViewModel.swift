@@ -7,6 +7,7 @@
 
 import LocalAuthentication
 import MapKit
+import _MapKit_SwiftUI
 
 @Observable
 class ViewModel {
@@ -20,6 +21,10 @@ extension ContentView {
         private(set) var locations: [Location]
         var selectedPlace: Location?
         var isUnlocked = false
+        var mapMode = "Standard"
+        var mapStyle: MapStyle {
+            mapMode == "Standard" ? .standard : .hybrid
+        }
         
         init() {
             do {

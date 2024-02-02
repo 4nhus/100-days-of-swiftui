@@ -20,40 +20,52 @@ struct ContentView: View {
     @State private var viewModel = ViewModel()
     
     var body: some View {
-        if viewModel.isUnlocked {
-            MapReader { proxy in
-                Map(initialPosition: startPosition) {
-                    ForEach(viewModel.locations) { location in
-                        Annotation(location.name, coordinate: location.coordinate) {
-                            Image(systemName: "star.circle")
-                                .resizable()
-                                .foregroundStyle(.red)
-                                .frame(width: 44, height: 44)
-                                .background(.white)
-                                .clipShape(.circle)
-                                .onLongPressGesture {
-                                    viewModel.selectedPlace = location
-                                }
+        NavigationStack {
+            if viewModel.isUnlocked {
+                MapReader { proxy in
+                    Map(initialPosition: startPosition) {
+                        ForEach(viewModel.locations) { location in
+                            Annotation(location.name, coordinate: location.coordinate) {
+                                Image(systemName: "star.circle")
+                                    .resizable()
+                                    .foregroundStyle(.red)
+                                    .frame(width: 44, height: 44)
+                                    .background(.white)
+                                    .clipShape(.circle)
+                                    .onLongPressGesture {
+                                        viewModel.selectedPlace = location
+                                    }
+                            }
+                        }
+                    }
+                    .onTapGesture { position in
+                        if let coordinate = proxy.convert(position, from: .local) {
+                            viewModel.addLocation(at: coordinate)
+                        }
+                    }
+                    .sheet(item: $viewModel.selectedPlace) { place in
+                        EditView(location: place) {
+                            viewModel.update(location: $0)
+                        }
+                    }
+                    .mapStyle(viewModel.mapStyle)
+                }
+                .navigationTitle("BucketList")
+                .toolbar {
+                    Menu("Map mode") {
+                        Picker("Map mode", selection: $viewModel.mapMode) {
+                            Text("Standard").tag("Standard")
+                            Text("Hybrid").tag("Hybrid")
                         }
                     }
                 }
-                .onTapGesture { position in
-                    if let coordinate = proxy.convert(position, from: .local) {
-                        viewModel.addLocation(at: coordinate)
-                    }
-                }
-                .sheet(item: $viewModel.selectedPlace) { place in
-                    EditView(location: place) {
-                        viewModel.update(location: $0)
-                    }
-                }
+            } else {
+                Button("Unlock Places", action: viewModel.authenticate)
+                    .padding()
+                    .background(.blue)
+                    .foregroundStyle(.white)
+                    .clipShape(.capsule)
             }
-        } else {
-            Button("Unlock Places", action: viewModel.authenticate)
-                .padding()
-                .background(.blue)
-                .foregroundStyle(.white)
-                .clipShape(.capsule)
         }
     }
 }
