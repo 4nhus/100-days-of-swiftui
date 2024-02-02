@@ -1,5 +1,5 @@
 //
-//  ContentView-ViewModel.swift
+//  ViewModel.swift
 //  BucketList
 //
 //  Created by Anh Nguyen on 2/2/2024.
@@ -79,6 +79,28 @@ extension ContentView {
             } else {
                 self.showBiometricsDisabled = true
             }
+        }
+    }
+}
+
+extension EditView {
+    @Observable
+    class ViewModel {
+        enum LoadingState {
+            case loading, loaded, failed
+        }
+        
+        var location: Location
+
+        var name: String
+        var description: String
+        var loadingState = LoadingState.loading
+        var pages = [Page]()
+        
+        init(location: Location) {
+            self.location = location
+            self.name = location.name
+            self.description = location.description
         }
     }
 }
