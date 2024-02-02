@@ -24,6 +24,10 @@ struct ContentView: View {
     @State private var showingFilters = false
     @State private var beginImage: CIImage?
     
+    var imageNotSelected: Bool {
+        processedImage == nil
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -49,9 +53,11 @@ struct ContentView: View {
                         .onChange(of: filterIntensity, applyProcessing)
                 }
                 .padding(.vertical)
+                .disabled(imageNotSelected)
                 
                 HStack {
                     Button("Change Filter", action: changeFilter)
+                        .disabled(imageNotSelected)
                     
                     Spacer()
                     
