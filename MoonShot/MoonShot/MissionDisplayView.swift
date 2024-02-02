@@ -36,12 +36,15 @@ struct MissionDisplayView: View {
                     .stroke(.lightBackground)
             )
         }
+        .accessibilityElement()
+        .accessibilityLabel("\(mission.displayName) space mission, dated \(mission.fullFormattedLaunchDate)")
+        .accessibilityHint("Link to more details about \(mission.displayName)")
+        .accessibilityAddTraits(.isButton)
     }
 }
 
 #Preview {
     let missions: [Mission] = Bundle.main.decode("missions.json")
-    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
     
     return MissionDisplayView(mission: missions[0])
 }

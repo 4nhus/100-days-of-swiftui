@@ -38,8 +38,11 @@ struct MissionView: View {
                         width * 0.6
                     }
                     .padding(.vertical)
+                    .accessibilityLabel("\(mission.displayName) mission patch")
                 
                 Text(mission.formattedLaunchDate)
+                    .accessibilityLabel("Launch date of \(mission.fullFormattedLaunchDate)")
+                    .accessibilityHidden(mission.launchDate == nil)
 
                 VStack(alignment: .leading) {
                     CustomDivider()
@@ -47,6 +50,7 @@ struct MissionView: View {
                     Text("Mission Highlights")
                         .font(.title.bold())
                         .padding(.bottom, 5)
+                        .accessibilityAddTraits(.isHeader)
 
                     Text(mission.description)
                     
@@ -55,10 +59,12 @@ struct MissionView: View {
                     Text("Crew")
                         .font(.title.bold())
                         .padding(.bottom, 5)
+                        .accessibilityAddTraits(.isHeader)
                 }
                 .padding(.horizontal)
                 
                 AstronautsView(crew: crew)
+                    .accessibilityLabel("\(mission.displayName) crew members")
             }
             .padding(.bottom)
         }

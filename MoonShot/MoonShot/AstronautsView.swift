@@ -24,6 +24,8 @@ struct AstronautsView: View {
                                     Capsule()
                                         .strokeBorder(.white, lineWidth: 1)
                                 )
+                                .accessibilityLabel(crewMember.astronaut.name)
+                        
                             
                             VStack(alignment: .leading) {
                                 Text(crewMember.astronaut.name)
@@ -35,6 +37,9 @@ struct AstronautsView: View {
                         }
                         .padding(.horizontal)
                     }
+                    .accessibilityLabel("\(crewMember.astronaut.name)")
+                    .accessibilityHint("Link to more details about \(crewMember.astronaut.name)")
+                    .accessibilityAddTraits(.isButton)
                 }
             }
         }

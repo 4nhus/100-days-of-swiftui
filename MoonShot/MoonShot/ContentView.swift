@@ -25,6 +25,7 @@ struct ContentView: View {
                     ListLayout(astronauts: astronauts, missions: missions)
                 }
             }
+            .accessibilityLabel("Apollo space missions")
             .navigationTitle("Moonshot")
             .background(.darkBackground)
             .preferredColorScheme(.dark)

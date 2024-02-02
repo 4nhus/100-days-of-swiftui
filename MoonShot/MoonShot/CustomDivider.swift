@@ -13,6 +13,7 @@ struct CustomDivider: View {
             .frame(height: 2)
             .foregroundStyle(.lightBackground)
             .padding(.vertical)
+            .accessibilityHidden(true)
     }
 }
 
