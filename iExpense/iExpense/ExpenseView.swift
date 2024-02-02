@@ -10,6 +10,14 @@ import SwiftUI
 struct ExpenseView: View {
     let expense: Expense
     
+    var currencyAmount: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = Locale.current.currencySymbol ?? "usd"
+        formatter.maximumFractionDigits = 2
+        return formatter.string(from: NSNumber(value: expense.amount))!
+    }
+    
     var body: some View {
         HStack {
             Text(expense.name)
@@ -17,8 +25,11 @@ struct ExpenseView: View {
             
             Spacer()
             
-            Text(expense.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+            Text(currencyAmount)
                 .fontWeight(expense.amount < 10 ? .regular : expense.amount < 100 ? .bold : .heavy)
         }
+        .accessibilityElement()
+        .accessibilityLabel("\(expense.name), \(currencyAmount)")
+        .accessibilityHint("\(expense.type) expense")
     }
 }
