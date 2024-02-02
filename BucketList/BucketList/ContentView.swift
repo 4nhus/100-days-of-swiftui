@@ -65,6 +65,12 @@ struct ContentView: View {
                     .background(.blue)
                     .foregroundStyle(.white)
                     .clipShape(.capsule)
+                    .alert("Biometrics authentication disabled!", isPresented: $viewModel.showBiometricsDisabled) { } message: {
+                        Text("Please enable FaceID or TouchID.")
+                    }
+                    .alert("Authentication failed!", isPresented: $viewModel.showAuthenticationFailed) { } message: {
+                        Text("Please try unlock places again.")
+                    }
             }
         }
     }

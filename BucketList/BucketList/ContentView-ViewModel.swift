@@ -25,6 +25,8 @@ extension ContentView {
         var mapStyle: MapStyle {
             mapMode == "Standard" ? .standard : .hybrid
         }
+        var showBiometricsDisabled = false
+        var showAuthenticationFailed = false
         
         init() {
             do {
@@ -71,11 +73,11 @@ extension ContentView {
                     if success {
                         self.isUnlocked = true
                     } else {
-                        // error
+                        self.showAuthenticationFailed = true
                     }
                 }
             } else {
-                // no biometrics
+                self.showBiometricsDisabled = true
             }
         }
     }
