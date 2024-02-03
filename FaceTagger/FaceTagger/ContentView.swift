@@ -11,8 +11,10 @@ import PhotosUI
 struct ContentView: View {
     static let photosURL = URL.documentsDirectory.appending(path: "photos.json")
     
+    let locationFetcher = LocationFetcher()
+    
     @State private var uploadedPhoto: PhotosPickerItem?
-    @State private var showPhotoNaming = false
+    @State private var showNamePhoto = false
     @State private var photoName = ""
     @State private var photos = (try? JSONDecoder().decode([Photo].self, from: Data(contentsOf: photosURL))) ?? [Photo]()
     @State private var showFailedPhotoImport = false
@@ -35,22 +37,27 @@ struct ContentView: View {
             }
             .navigationTitle("FaceTagger")
             .toolbar {
-                PhotosPicker("Import photo", selection: $uploadedPhoto)
+                ToolbarItem(placement: .topBarTrailing) {
+                    PhotosPicker("Import photo", selection: $uploadedPhoto)
+                }
             }
             .onChange(of: uploadedPhoto) {
-                Task {
-                    showPhotoNaming = true
+                if uploadedPhoto != nil {
+                    Task {
+                        showNamePhoto = true
+                        
+                    }
                 }
             }
         }
-        .sheet(isPresented: $showPhotoNaming) {
+        .sheet(isPresented: $showNamePhoto) {
             Form {
-                Section("Name the photo") {
-                    TextField("Photo name", text: $photoName)
+                Section("Photo name") {
+                    TextField("Name", text: $photoName)
                 }
                 Button("Save") {
                     savePhoto()
-                    showPhotoNaming = false
+                    showNamePhoto = false
                 }
                 .disabled(photoName.isEmpty)
             }
@@ -61,10 +68,8 @@ struct ContentView: View {
         .alert("Unable to import photo", isPresented: $showFailedPhotoImport) { } message: {
             Text(failedPhotoImportMessage)
         }
-        .onChange(of: showPhotoNaming) { oldValue, newValue in
-            if oldValue == true {
-                
-            }
+        .onAppear {
+            locationFetcher.start()
         }
     }
     
@@ -73,9 +78,19 @@ struct ContentView: View {
             guard let photoData = try? await uploadedPhoto?.loadTransferable(type: Data.self) else {
                 failedPhotoImportMessage = "Failed to get data from imported photo"
                 showFailedPhotoImport = true
-                return }
+                return
+            }
             
-            photos.append(Photo(data: photoData, name: photoName))
+            guard let location = locationFetcher.lastKnownLocation else {
+                failedPhotoImportMessage = "Location permissions required to enable photo location tagging"
+                showFailedPhotoImport = true
+                return
+            }
+            
+            photos.append(Photo(data: photoData, name: photoName, latitude: location.latitude, longitude: location.longitude))
+            
+            photoName = ""
+            uploadedPhoto = nil
             
             guard let savedPhotosData = try? JSONEncoder().encode(photos) else {
                 failedPhotoImportMessage = "Failed to encode photo for saving"

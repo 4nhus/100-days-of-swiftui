@@ -9,8 +9,10 @@ import Foundation
 
 struct Photo: Codable, Comparable, Identifiable, Hashable {
     var id = UUID()
-    var data: Data
-    var name: String
+    let data: Data
+    let name: String
+    let latitude: Double
+    let longitude: Double
     
     static func < (lhs: Photo, rhs: Photo) -> Bool {
         lhs.name < rhs.name
