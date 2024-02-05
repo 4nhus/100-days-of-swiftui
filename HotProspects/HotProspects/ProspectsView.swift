@@ -22,6 +22,7 @@ struct ProspectsView: View {
     
     @State private var isShowingScanner = false
     @State private var selectedProspects = Set<Prospect>()
+    @State var editProspect: Prospect!
     
     var title: String {
         switch filter {
@@ -69,6 +70,10 @@ struct ProspectsView: View {
                         modelContext.delete(prospect)
                     }
                     
+                    Button("Edit", systemImage: "pencil") {
+                        editProspect = prospect
+                    }
+                    
                     if prospect.isContacted {
                         Button("Mark Uncontacted", systemImage: "person.crop.circle.badge.xmark") {
                             prospect.isContacted.toggle()
@@ -107,6 +112,9 @@ struct ProspectsView: View {
             }
             .sheet(isPresented: $isShowingScanner) {
                 CodeScannerView(codeTypes: [.qr], simulatedData: "Paul Hudson\npaul@hackingwithswift.com", completion: handleScan)
+            }
+            .sheet(item: $editProspect) { prospect in
+                EditView(prospect: prospect)
             }
         }
     }
