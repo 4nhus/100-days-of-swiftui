@@ -13,6 +13,12 @@ struct EditView: View {
     @State private var name = ""
     @State private var email = ""
     
+    init(prospect: Prospect) {
+        self.prospect = prospect
+        self._name = State.init(initialValue: prospect.name)
+        self._email = State.init(initialValue: prospect.emailAddress)
+    }
+    
     var body: some View {
         NavigationStack {
             Form {

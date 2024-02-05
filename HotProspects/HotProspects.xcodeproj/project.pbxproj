@@ -16,6 +16,7 @@
 		9625AA7C2B7087AC00D5117A /* Prospect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9625AA7B2B7087AC00D5117A /* Prospect.swift */; };
 		9625AA7F2B708B8800D5117A /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 9625AA7E2B708B8800D5117A /* CodeScanner */; };
 		9625AA812B709E5100D5117A /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9625AA802B709E5100D5117A /* EditView.swift */; };
+		969E383B2B70FDCB00EF3FBA /* ProspectsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969E383A2B70FDCB00EF3FBA /* ProspectsListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		9625AA792B7086D400D5117A /* MeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeView.swift; sourceTree = "<group>"; };
 		9625AA7B2B7087AC00D5117A /* Prospect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prospect.swift; sourceTree = "<group>"; };
 		9625AA802B709E5100D5117A /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
+		969E383A2B70FDCB00EF3FBA /* ProspectsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProspectsListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 			children = (
 				9625AA662B6F0A7100D5117A /* HotProspectsApp.swift */,
 				9625AA682B6F0A7100D5117A /* ContentView.swift */,
+				969E383A2B70FDCB00EF3FBA /* ProspectsListView.swift */,
 				9625AA772B7086CB00D5117A /* ProspectsView.swift */,
 				9625AA802B709E5100D5117A /* EditView.swift */,
 				9625AA7B2B7087AC00D5117A /* Prospect.swift */,
@@ -161,6 +164,7 @@
 				9625AA7C2B7087AC00D5117A /* Prospect.swift in Sources */,
 				9625AA812B709E5100D5117A /* EditView.swift in Sources */,
 				9625AA782B7086CB00D5117A /* ProspectsView.swift in Sources */,
+				969E383B2B70FDCB00EF3FBA /* ProspectsListView.swift in Sources */,
 				9625AA692B6F0A7100D5117A /* ContentView.swift in Sources */,
 				9625AA672B6F0A7100D5117A /* HotProspectsApp.swift in Sources */,
 			);
