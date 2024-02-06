@@ -162,17 +162,7 @@ struct ContentView: View {
     func resetCards() {
         timeRemaining = 100
         isActive = true
-        loadData()
-    }
-    
-    func loadData() {
-        let url = URL.documentsDirectory.appending(path: "cards.json")
-        
-        if let data = try? Data(contentsOf: url) {
-            if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
-                cards = decoded
-            }
-        }
+        Card.loadCards(cards: &cards)
     }
 }
 

@@ -40,30 +40,14 @@ struct EditCards: View {
                 Button("Done", action: done)
             }
             .listStyle(.grouped)
-            .onAppear(perform: loadData)
+            .onAppear {
+                Card.loadCards(cards: &cards)
+            }
         }
     }
 
     func done() {
         dismiss()
-    }
-
-    func loadData() {
-        let url = URL.documentsDirectory.appending(path: "cards.json")
-        
-        if let data = try? Data(contentsOf: url) {
-            if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
-                cards = decoded
-            }
-        }
-    }
-
-    func saveData() {
-        let url = URL.documentsDirectory.appending(path: "cards.json")
-        
-        if let data = try? JSONEncoder().encode(cards) {
-            try? data.write(to: url, options: [.atomic, .completeFileProtection])
-        }
     }
 
     func addCard() {
@@ -73,14 +57,14 @@ struct EditCards: View {
 
         let card = Card(prompt: trimmedPrompt, answer: trimmedAnswer)
         cards.insert(card, at: 0)
-        saveData()
+        Card.saveCards(cards)
         newPrompt = ""
         newAnswer = ""
     }
 
     func removeCards(at offsets: IndexSet) {
         cards.remove(atOffsets: offsets)
-        saveData()
+        Card.saveCards(cards)
     }
 }
 
