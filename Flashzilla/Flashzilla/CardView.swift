@@ -18,21 +18,31 @@ struct CardView: View {
     @State private var isShowingAnswer = false
     @State private var offset = CGSize.zero
     
+    var cardColour: Color {
+        switch offset.width {
+        case ..<0:
+                .red
+        case 0:
+                .white
+        default:
+                .green
+        }
+    }
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 25, style: .continuous)
                 .fill(
                     differentiateWithoutColor
-                        ? .white
-                        : .white
-                            .opacity(1 - Double(abs(offset.width / 50)))
-
+                    ? .white
+                    : .white
+                        .opacity(1 - Double(abs(offset.width / 50)))
                 )
                 .background(
                     differentiateWithoutColor
-                        ? nil
-                        : RoundedRectangle(cornerRadius: 25, style: .continuous)
-                            .fill(offset.width > 0 ? .green : .red)
+                    ? nil
+                    : RoundedRectangle(cornerRadius: 25, style: .continuous)
+                        .fill(cardColour)
                 )
                 .shadow(radius: 10)
             
@@ -45,7 +55,7 @@ struct CardView: View {
                     Text(card.prompt)
                         .font(.largeTitle)
                         .foregroundColor(.black)
-
+                    
                     if isShowingAnswer {
                         Text(card.answer)
                             .font(.title)
