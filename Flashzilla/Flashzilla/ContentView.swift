@@ -42,15 +42,15 @@ struct ContentView: View {
                     .clipShape(Capsule())
                 
                 ZStack {
-                    ForEach(0..<cards.count, id: \.self) { index in
-                        CardView(card: cards[index]) {
+                    ForEach(cards) { card in
+                        CardView(card: card) { correct in
                            withAnimation {
-                               removeCard(at: index)
+                               removeCard(card, cardWasCorrect: correct)
                            }
                         }
-                        .stacked(at: index, in: cards.count)
-                        .allowsHitTesting(index == cards.count - 1)
-                        .accessibilityHidden(index < cards.count - 1)
+                        .stacked(at: cards.firstIndex { $0.id == card.id }!, in: cards.count)
+                        .allowsHitTesting(cards.firstIndex { $0.id == card.id }! == cards.count - 1)
+                        .accessibilityHidden(cards.firstIndex { $0.id == card.id }! < cards.count - 1)
                     }
                 }
                 .allowsHitTesting(timeRemaining > 0)
@@ -91,7 +91,7 @@ struct ContentView: View {
                     HStack {
                         Button {
                             withAnimation {
-                                removeCard(at: cards.count - 1)
+                                removeCard(cards.last, cardWasCorrect: false)
                             }
                         } label: {
                             Image(systemName: "xmark.circle")
@@ -106,7 +106,7 @@ struct ContentView: View {
 
                         Button {
                             withAnimation {
-                                removeCard(at: cards.count - 1)
+                                removeCard(cards.last, cardWasCorrect: true)
                             }
                         } label: {
                             Image(systemName: "checkmark.circle")
@@ -143,10 +143,16 @@ struct ContentView: View {
         .onAppear(perform: resetCards)
     }
     
-    func removeCard(at index: Int) {
-        guard index >= 0 else { return }
+    func removeCard(_ cardToRemove: Card?, cardWasCorrect: Bool) {
+        guard let cardToRemove else { return }
         
-        cards.remove(at: index)
+        cards.remove(at: cards.firstIndex { $0.id == cardToRemove.id }!)
+        
+        if !cardWasCorrect {
+            var cardToReinsert = cardToRemove
+            cardToReinsert.id = UUID()
+            cards.insert(cardToReinsert, at: 0)
+        }
         
         if cards.isEmpty {
             isActive = false

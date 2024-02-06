@@ -13,7 +13,7 @@ struct CardView: View {
     
     let card: Card
     
-    var removal: (() -> Void)? = nil
+    var removal: ((Bool) -> Void)? = nil
     
     @State private var isShowingAnswer = false
     @State private var offset = CGSize.zero
@@ -81,8 +81,10 @@ struct CardView: View {
                     offset = gesture.translation
                 }
                 .onEnded { _ in
-                    if abs(offset.width) > 100 {
-                        removal?()
+                    if offset.width > 100 {
+                        removal?(true)
+                    } else if offset.width < 100 {
+                        removal?(false)
                     } else {
                         offset = .zero
                     }
