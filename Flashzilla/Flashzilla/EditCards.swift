@@ -49,7 +49,9 @@ struct EditCards: View {
     }
 
     func loadData() {
-        if let data = UserDefaults.standard.data(forKey: "Cards") {
+        let url = URL.documentsDirectory.appending(path: "cards.json")
+        
+        if let data = try? Data(contentsOf: url) {
             if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
                 cards = decoded
             }
@@ -57,8 +59,10 @@ struct EditCards: View {
     }
 
     func saveData() {
+        let url = URL.documentsDirectory.appending(path: "cards.json")
+        
         if let data = try? JSONEncoder().encode(cards) {
-            UserDefaults.standard.set(data, forKey: "Cards")
+            try? data.write(to: url, options: [.atomic, .completeFileProtection])
         }
     }
 
