@@ -13,5 +13,6 @@ struct HighRollersApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: Result.self)
     }
 }
