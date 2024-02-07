@@ -25,11 +25,15 @@ struct RollView: View {
     
     @State private var dice = Dice.four
     @State private var isShowingChangeDice = false
+    @State private var rollStartFlag = false
+    @State private var rollFinishFlag = false
     
     var body: some View {
         NavigationStack {
             Button("Roll \(dice.rawValue) sided dice") {
+                rollStartFlag.toggle()
                 modelContext.insert(Result(value: dice.roll(), diceSides: dice.rawValue, dateAdded: Date.now))
+                rollFinishFlag.toggle()
             }
             .toolbar {
                 Menu("Change dice") {
@@ -41,6 +45,8 @@ struct RollView: View {
                 }
             }
             .navigationTitle("Roll")
+            .sensoryFeedback(.start, trigger: rollStartFlag)
+            .sensoryFeedback(.success, trigger: rollFinishFlag)
         }
     }
 }
